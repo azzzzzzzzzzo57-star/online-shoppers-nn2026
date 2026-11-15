@@ -11,3 +11,11 @@ __pycache__/
 # Virtual environments
 .venv/
 venv/
+# Generated model artifacts
+models/*.keras
+models/*.joblib
+models/*.json
+experiments/*.csv
+experiments/*.npz
+experiments/*.png
+experiments/*.json
