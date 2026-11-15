@@ -5,15 +5,17 @@ data:
   dataset: Online Shoppers Purchasing Intention
   target: Revenue
   raw_file: data/raw/online_shoppers.csv
-  processed_file: data/processed/online_shoppers_clean.csv
+  processed_dir: data/processed
 
 preprocessing:
   remove_duplicates: true
-  handle_missing_values: none
+  drop_rows_missing_target: true
   numerical_scaling: StandardScaler
   categorical_encoding: OneHotEncoder
 
 split:
-  test_size: 0.20
+  train_size: 0.70
+  validation_size: 0.15
+  test_size: 0.15
   random_state: 42
   stratify: true
