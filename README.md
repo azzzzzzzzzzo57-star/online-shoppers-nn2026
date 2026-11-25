@@ -1,33 +1,35 @@
 # Online Shoppers Purchasing Intention — AIE231
 
-This repository contains the Week 9 data-engineering pipeline and Week 10 EDA/baseline checkpoint for a binary classification project.
+This repository contains the Week 9 data-engineering pipeline and Week 10 EDA, baselines, and first neural-network model for binary classification.
 
 ## Problem definition
-Predict whether an online shopping session ends in a purchase using the `Revenue` target (`False` = 0, `True` = 1). A false negative can miss a high-intent session; a false positive can waste marketing effort.
+Predict whether an online shopping session ends in a purchase using `Revenue` (`False` = 0, `True` = 1).
 
 - **Task:** binary classification
-- **Primary metric:** macro-F1 (gives equal importance to both classes under imbalance)
-- **Secondary metrics:** purchase recall, per-class precision/recall/F1, ROC-AUC, accuracy, confusion matrix
+- **Primary metric:** macro-F1, which gives equal importance to both classes under class imbalance
+- **Secondary metrics:** per-class precision/recall/F1, purchase recall, ROC-AUC, accuracy, and confusion matrix
 - **Dataset:** [UCI Online Shoppers Purchasing Intention, ID 468](https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention)
 
 ## Week 9 — Data engineering
 - Download and inspect the UCI dataset.
-- Remove exact duplicate rows and rows with missing target labels.
+- Remove exact duplicate rows and rows with missing target labels; report missing feature values.
 - Impute missing numeric/categorical features with median/most-frequent values fitted on training data only.
 - Create stratified 70/15/15 train/validation/test partitions (seed 42).
 - Fit imputers, `StandardScaler`, and `OneHotEncoder` on training data only; validation and test are transform-only.
 - Calculate balanced class weights from training labels only.
-- Save processed splits, preprocessor, split summary, and class weights under `data/processed/` locally (not committed).
+- Save processed splits, fitted preprocessor, class weights, and split summary under `data/processed/` locally (not committed).
 
-The dataset is session-level tabular data, not a time series, and does not provide a person/source grouping key. Stratified random splitting is therefore used.
+The dataset is session-level tabular data, not a time series, and does not provide a person/source grouping key. Stratified random splitting is therefore used. Sequence windows and image augmentation do not apply to this dataset.
 
-## Week 10 — EDA and baselines
-- `notebooks/01_eda.ipynb`: dataset structure, data quality, target imbalance, numeric distributions, and correlations.
-- `notebooks/02_baselines.ipynb`: validation baseline comparison and class-imbalance ablation.
-- `src/baselines.py`: majority-class and logistic-regression baselines.
-- Imbalance ablation: compare unweighted logistic regression with `class_weight="balanced"` and inspect per-class recall.
-- Baseline scripts use validation data only; the test set is not loaded.
-- `src/evaluate.py` is reserved for one final held-out test evaluation after model selection.
+## Week 10 — EDA, baselines, and Model A
+- `notebooks/01_eda.ipynb`: dataset structure, data quality, target imbalance, numerical distributions, and correlations.
+- `notebooks/02_baselines.ipynb`: compare the trivial baseline, learned baseline, and Model A using validation data.
+- **Trivial baseline:** `DummyClassifier(strategy="most_frequent")`.
+- **Learned baseline:** logistic regression.
+- **Imbalance ablation:** compare unweighted and `class_weight="balanced"` logistic regression on the same validation split; report per-class recall.
+- **Model A:** feed-forward neural network with 64- and 32-unit hidden layers, dropout, early stopping, and training-only class weights.
+- Baselines and Model A use validation data for comparison; the test set is not used for model selection.
+- `src/evaluate.py` selects the candidate with the best validation macro-F1 and evaluates the held-out test split once.
 
 ## Setup
 Use Python 3.11 or 3.12.
@@ -51,13 +53,22 @@ python data/clean_data.py
 python -m src.run_week10
 ```
 
-When all model choices are final, run the held-out test evaluation once:
+The Week 10 runner executes preprocessing, both baselines, then Model A, in that order. It does **not** load or evaluate the test split.
+
+After model selection is complete, run the held-out test evaluation exactly once:
 
 ```bash
 python -m src.evaluate
 ```
 
-Generated datasets, fitted models, and experiment outputs are intentionally excluded from Git. The scripts create them locally.
+## Output files (generated locally)
+- `data/processed/train_data.joblib`, `validation_data.joblib`, `test_data.joblib`
+- `data/processed/preprocessor.joblib`, `class_weights.joblib`, `split_summary.json`
+- `models/week10_logistic_unweighted.joblib`, `week10_logistic_balanced.joblib`, `week10_model_a.keras`
+- `experiments/week10_baseline_validation.json`, `week10_model_a_validation.json`
+- `experiments/final_test_evaluation.json` (only after the final test command)
+
+Generated data, fitted models, and experiment outputs are intentionally excluded from Git. Run the documented commands to generate them locally.
 
 ## Project structure
 - `configs/base.yaml` — project, preprocessing, and split settings
@@ -67,11 +78,13 @@ Generated datasets, fitted models, and experiment outputs are intentionally excl
 - `data/README.md` — dataset documentation
 - `src/data.py` — cleaning, stratified split, train-only preprocessing, and class weights
 - `src/baselines.py` — majority and logistic-regression baselines plus imbalance ablation
-- `src/run_week10.py` — reproducible preprocessing and validation baseline runner
-- `src/evaluate.py` — one-time final test evaluation
+- `src/models.py` — Model A neural-network architecture
+- `src/train.py` — train Model A and evaluate on validation data
+- `src/run_week10.py` — reproducible preprocessing, baselines, and Model A runner
+- `src/evaluate.py` — validation-based model selection and one-time final test evaluation
 - `notebooks/01_eda.ipynb` — exploratory data analysis
-- `notebooks/02_baselines.ipynb` — Week 10 baseline analysis
-- `reports/week9_week10_report.md` — report structure and methodology
+- `notebooks/02_baselines.ipynb` — Week 10 baseline and Model A comparison
+- `reports/week9_week10_report.md` — methodology and results-reporting template
 - `requirements.txt` — pinned Python dependencies
 
 ## Dataset citation
