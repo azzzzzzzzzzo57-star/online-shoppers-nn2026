@@ -1,13 +1,20 @@
-# Raw dataset
-data/raw/
-
-# Generated processed data
-data/processed/
-
-# Python cache
-__pycache__/
-*.pyc
-
-# Virtual environments
+# Python environments and caches
 .venv/
+.venv-*/
 venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Downloaded/generated data and local experiment artifacts
+data/raw/
+data/processed/
+models/
+experiments/
+reports/generated/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
