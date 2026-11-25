@@ -2,7 +2,13 @@
 
 ## Week 9 — Data Engineer scope
 
-**Problem:** Predict whether an online shopping session ends in a purchase (Revenue).
+### Problem statement
+An e-commerce analytics or marketing team wants to estimate whether a browsing session will end in a purchase. The model uses the session's available behavioural and technical features to predict the binary target `Revenue` (purchase / no purchase). A false negative can cause the business to miss a high-intent session and an opportunity to improve conversion, while a false positive can waste promotional effort or marketing resources on a session that does not convert.
+
+**Task:** Binary classification  
+**Target:** `Revenue` (False = 0, True = 1)  
+**Primary metric:** Macro-F1, because the target classes are imbalanced and the metric gives equal importance to purchase and non-purchase performance.  
+**Secondary metrics:** Purchase-class recall, per-class precision/recall/F1, and ROC-AUC. Accuracy is reported but is not used alone to judge the model.
 
 **Dataset:** UCI Online Shoppers Purchasing Intention, dataset ID 468: https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention
 
@@ -13,7 +19,7 @@ This branch contains the Week 9 topic/checkpoint preparation and the Data Engine
 Use Python 3.11 or 3.12.
 
     python -m venv .venv
-    # Windows: .venv\Scripts\activate
+    # Windows: .venv\\Scripts\\activate
     # macOS/Linux: source .venv/bin/activate
     python -m pip install --upgrade pip
     pip install -r requirements.txt
