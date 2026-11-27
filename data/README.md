@@ -21,3 +21,17 @@ The target is imbalanced. The actual class counts and percentages are calculated
 
 ## Reproducibility
 Raw and processed datasets are generated locally and are not committed. Run the download script to obtain the dataset, and cite UCI in the final report.
+
+## License and Attribution
+
+The Online Shoppers Purchasing Intention dataset is provided by the UCI Machine Learning Repository under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license.
+
+The dataset can be shared and adapted under the terms of this license, provided that appropriate credit is given to the original creators and source.
+
+**Original creators:** C. Sakar and Yomi Kastro.
+
+**Dataset citation:**
+
+Sakar, C., & Kastro, Y. (2018). *Online Shoppers Purchasing Intention Dataset*. UCI Machine Learning Repository. https://doi.org/10.24432/C5F88Q
+
+**Official license:** https://creativecommons.org/licenses/by/4.0/
