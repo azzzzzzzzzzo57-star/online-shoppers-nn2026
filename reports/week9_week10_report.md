@@ -52,3 +52,48 @@ The scripts generate:
 - `experiments/final_test_evaluation.json` (only after the final one-time evaluation)
 
 Copy the measured macro-F1 and both class recalls for each validation model into the final submitted report. Explain whether logistic regression improves over the majority baseline, whether Model A improves over the learned baseline, and the purchase/no-purchase recall trade-off from class weighting. Do not invent results or tune based on test metrics.
+
+## Final Test Evaluation
+
+After completing model selection using the validation set, the final model was selected based on the highest validation Macro-F1 score. The Feed-Forward Neural Network (Model A) achieved the highest validation Macro-F1 of **0.7687**, outperforming both logistic regression baselines.
+
+The selected model was evaluated once on the held-out test set, which was not used during training or model selection.
+
+### Final Test Results
+
+| Metric | Test Result |
+|---|---:|
+| Accuracy | 0.8504 |
+| Macro-F1 | 0.7716 |
+| Weighted F1 | 0.8638 |
+| ROC-AUC | 0.9194 |
+| Purchase Precision | 0.5128 |
+| Purchase Recall | 0.8427 |
+| Purchase F1-score | 0.6376 |
+
+### Confusion Matrix
+
+Rows represent actual classes and columns represent predicted classes. Class order: No Purchase (0), Purchase (1).
+
+| Actual / Predicted | No Purchase | Purchase |
+|---|---:|---:|
+| No Purchase | 1316 | 229 |
+| Purchase | 45 | 241 |
+
+### Results Interpretation
+
+The neural network achieved a test Macro-F1 score of **0.7716** and an accuracy of **85.04%**. Its ROC-AUC score of **0.9194** indicates strong ability to distinguish between purchasing and non-purchasing sessions.
+
+For the minority Purchase class, the model achieved a recall of **84.27%**, correctly identifying 241 out of 286 actual purchasing sessions. However, its purchase precision was **51.28%**, meaning that some sessions predicted as purchases did not result in actual purchases. This reflects a trade-off between detecting more potential purchases and producing false positive predictions.
+
+The validation and test Macro-F1 scores were close (0.7687 and 0.7716, respectively), with no obvious performance drop on the held-out test set.
+
+### Final Model Selection
+
+Model A was selected because it achieved the highest validation Macro-F1 among the evaluated candidates:
+
+- Unweighted Logistic Regression: 0.7279
+- Class-weighted Logistic Regression: 0.7552
+- Model A Neural Network: 0.7687
+
+The test set was reserved for the final evaluation and was not used for further model tuning.
