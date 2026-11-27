@@ -45,11 +45,44 @@ python -m src.evaluate
 
 This selects the candidate with the highest validation macro-F1 and then evaluates it on the test split once.
 
-## Results to record
-The scripts generate:
-- `experiments/week10_baseline_validation.json`
-- `experiments/week10_model_a_validation.json`
-- `experiments/final_test_evaluation.json` (only after the final one-time evaluation)
+## Validation Results
+
+All models were evaluated on the validation set. The test set was not used for training, model selection, or validation comparisons.
+
+### Validation Performance Comparison
+
+| Model | Accuracy | Macro-F1 | No-Purchase Recall | Purchase Recall |
+|---|---:|---:|---:|---:|
+| Majority Class Dummy | 0.8438 | 0.4576 | 1.0000 | 0.0000 |
+| Unweighted Logistic Regression | 0.8886 | 0.7279 | 0.9819 | 0.3846 |
+| Class-Weighted Logistic Regression | 0.8433 | 0.7552 | 0.8550 | 0.7797 |
+| Model A Neural Network | 0.8465 | 0.7687 | 0.8453 | 0.8531 |
+
+### Baseline Comparison
+
+The majority-class Dummy Classifier achieved an accuracy of 84.38%, but its Purchase Recall was 0.00%. It predicted every session as No Purchase and failed to identify any actual purchases. This demonstrates why accuracy alone is not sufficient for this imbalanced classification problem.
+
+Unweighted Logistic Regression improved substantially over the Dummy Classifier, achieving a Macro-F1 score of 0.7279 and a Purchase Recall of 38.46%.
+
+### Class Imbalance Ablation
+
+Applying `class_weight="balanced"` to Logistic Regression increased Purchase Recall from 38.46% to 77.97%, an improvement of 39.51 percentage points.
+
+However, No-Purchase Recall decreased from 98.19% to 85.50%, and Purchase Precision decreased from 79.71% to 49.89%. This shows the trade-off introduced by class weighting: the model identifies more purchasing sessions but also produces more false positive purchase predictions.
+
+The Macro-F1 score increased from 0.7279 to 0.7552, indicating a better balance between the two classes.
+
+### Model A Comparison
+
+Model A, a feed-forward neural network, achieved the highest validation Macro-F1 score of 0.7687, outperforming both logistic regression candidates.
+
+It also achieved a Purchase Recall of 85.31% and a No-Purchase Recall of 84.53%. Compared with class-weighted Logistic Regression, Model A improved Macro-F1 from 0.7552 to 0.7687 and Purchase Recall from 77.97% to 85.31%.
+
+Model A was trained for 28 epochs, with early stopping monitoring validation loss and restoring the best weights. The measured training time was 6.18 seconds.
+
+### Validation Model Selection
+
+Model A was selected as the final candidate because it achieved the highest validation Macro-F1 among all evaluated models. The held-out test set remained untouched until the one-time final evaluation reported in the next section.
 
 Copy the measured macro-F1 and both class recalls for each validation model into the final submitted report. Explain whether logistic regression improves over the majority baseline, whether Model A improves over the learned baseline, and the purchase/no-purchase recall trade-off from class weighting. Do not invent results or tune based on test metrics.
 
