@@ -84,8 +84,6 @@ Model A was trained for 28 epochs, with early stopping monitoring validation los
 
 Model A was selected as the final candidate because it achieved the highest validation Macro-F1 among all evaluated models. The held-out test set remained untouched until the one-time final evaluation reported in the next section.
 
-Copy the measured macro-F1 and both class recalls for each validation model into the final submitted report. Explain whether logistic regression improves over the majority baseline, whether Model A improves over the learned baseline, and the purchase/no-purchase recall trade-off from class weighting. Do not invent results or tune based on test metrics.
-
 ## Final Test Evaluation
 
 After completing model selection using the validation set, the final model was selected based on the highest validation Macro-F1 score. The Feed-Forward Neural Network (Model A) achieved the highest validation Macro-F1 of **0.7687**, outperforming both logistic regression baselines.
