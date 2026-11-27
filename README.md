@@ -2,8 +2,17 @@
 
 This repository contains the Week 9 data-engineering pipeline and Week 10 EDA, baselines, and first neural-network model for binary classification.
 
-## Team Members
+## Team Member	Role	Responsibilities
+Ali	Tech Lead	Coordinates the project, reviews integration, and ensures the technical work follows the project requirements.
+Aya	Data Engineer	Downloads, inspects, cleans, and preprocesses the dataset; prepares the stratified train/validation/test splits and . Baseline and
+Analysis Engineer EDA and both baselines EDA notebook, baseline scripts Trains Model A and compares it with the baselines.
+Shahd	Model Architect 
+Architecture design, hand parameter counts,regularization models/ module with Models B and C Runs the architecture and regularization ablations, writes the 
+GradientTape step.
+Mohamed Experimentation Engineer Hyperparameter tuning and experiment tracking Experiment runner,logging, learning-curve plots Runs the learning-rate, batchsize and optimizer studies.
+Nada Evaluation and Deployment Engineer Test-set evaluation, error analysis, inference pipeline,demo evaluate.py,predict.py, demo app Produces the confusion matrix, ROC and failure-case analysis for every model
 
+## Team Members
 | Team Member | GitHub Username |
 |---|---|
 | Aya | [@azzzzzzzzzzo57-star](https://github.com/azzzzzzzzzzo57-star) |
