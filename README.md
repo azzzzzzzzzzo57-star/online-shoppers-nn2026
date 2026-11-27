@@ -2,6 +2,17 @@
 
 This repository contains the Week 9 data-engineering pipeline and Week 10 EDA, baselines, and first neural-network model for binary classification.
 
+## Team Members
+
+| Team Member | GitHub Username |
+|---|---|
+| Aya | [@azzzzzzzzzzo57-star](https://github.com/azzzzzzzzzzo57-star) |
+| Ali | [@alimoh555ali-boop](https://github.com/alimoh555ali-boop) |
+| Mohamed | [@mohamedtttt](https://github.com/mohamedtttt) |
+| Nada Hesham | [@nadahesham791-droid](https://github.com/nadahesham791-droid) |
+| Shahd Mostafa | [@shahdmostafa368-mr](https://github.com/shahdmostafa368-mr) |
+
+
 ## Problem definition
 Predict whether an online shopping session ends in a purchase using `Revenue` (`False` = 0, `True` = 1).
 
